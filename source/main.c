@@ -17,7 +17,7 @@ typedef struct {
 	u32 hash[0x20>>2];
 } firm_sectionhdr;
 
-extern u32 _start, __end__;
+extern u32 _start[], __end__[];
 
 void sha256hw_calchash(u32 *outhash, u32 *buf, u32 buf_wordsize)
 {
@@ -57,7 +57,7 @@ s32 boot_device(u32 device, read_funcptr read_data, u32 basesector, u32 maxsecto
 
 	u32 firmsections_memrangeblacklist[6][2] = {//Blacklist all memory used by this loader, and also the area used for exception vectors / etc + used areas of ITCM.
 	{0x080030fc, 0x080038fc},
-	{(u32)&_start, (u32)&__end__},
+	{_start, __end__},
 	{0x08100000-0x1000, 0x08100000},//stack
 	{0x08000000, 0x08000040},
 	{0xfff00000, 0xfff04000},
